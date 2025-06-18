@@ -4,4 +4,10 @@ services:
     env: python
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn server:app --host 0.0.0.0 --port 10000
-    plan: free
+    envVars:
+      - key: ML_CLIENT_ID
+        value: TU_CLIENT_ID_DE_ML
+      - key: ML_CLIENT_SECRET
+        value: TU_CLIENT_SECRET_DE_ML
+      - key: ML_REDIRECT_URI
+        value: https://ml-redirect.onrender.com

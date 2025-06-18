@@ -6,7 +6,7 @@ app = FastAPI()
 
 CLIENT_ID = os.getenv("ML_CLIENT_ID")
 CLIENT_SECRET = os.getenv("ML_CLIENT_SECRET")
-REDIRECT_URI = "https://ml-redirect.onrender.com"
+REDIRECT_URI = os.getenv("ML_REDIRECT_URI")
 
 @app.get("/callback")
 async def handle_callback(request: Request):
@@ -24,6 +24,4 @@ async def handle_callback(request: Request):
             "redirect_uri": REDIRECT_URI
         })
 
-        data = res.json()
-        print("✅ Access token:", data)
-        return data
+        return res.json()
