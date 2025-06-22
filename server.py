@@ -15,7 +15,7 @@ async def handle_callback(request: Request):
 
     if not code:
         return JSONResponse(
-            status_code=status.HTTP_404_NOT_FOUND,
+            status_code=status.HTTP_200_OK,
             content={"error": "No se recibió el código"}
         )
 
