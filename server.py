@@ -1,4 +1,5 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, status
+from fastapi.responses import JSONResponse
 import httpx
 import os
 
@@ -13,7 +14,10 @@ async def handle_callback(request: Request):
     code = request.query_params.get("code")
 
     if not code:
-        return {"error": "No se recibió el código"}
+        return JSONResponse(
+            status_code=status.HTTP_404_NOT_FOUND,
+            content={"error": "No se recibió el código"}
+        )
 
     async with httpx.AsyncClient() as client:
         res = await client.post("https://api.mercadolibre.com/oauth/token", data={
@@ -24,4 +28,7 @@ async def handle_callback(request: Request):
             "redirect_uri": REDIRECT_URI
         })
 
-        return res.json()
+        return JSONResponse(
+            status_code=status.HTTP_200_OK,
+            content=res.json()
+        )
